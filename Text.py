@@ -1,3 +1,18 @@
+bl_info = {
+     "name" :  "Object add" ,                           """这将作为主条目显示在附加组件菜单中"""
+    "description" :  "单行解释这个脚本究竟做了什么。" , """这个简短的文本帮助用户在阅读插件列表时决定他是否需要插件"""
+    "author" :  "zh" ,                                  """作者姓名"""
+    "version" :  ( 1 ,  0 ),                            """脚本版本"""
+    "blender" :  ( 2 ,  65 ,  0 ),                      """运行脚本所需的最低 Blender 版本"""
+    "location" :  "View3D > Tool" ,                     """说明可以在何处找到新功能"""
+    "warning" :  "" ,                                   """用于插件面板中的警告图标和文本"""
+    "tracker_url" :  "https://developer.blender.org/maniphest/task/edit/form /2/" , 
+    "support" :  "COMMUNITY" ,                          """显示支持级别（默认为COMMUNITY）"""
+    "category" :  "Add Mesh"                            """定义脚本所属的组"""
+}
+
+
+
 import bpy
 
 class TestPanel(bpy.types.Panel):
@@ -37,6 +52,23 @@ class TestPanel(bpy.types.Panel):
                                         PREFERENCES 首选项，编辑持久配置设置
                                         
     """  
+    
+    """
+    Blender面板中界面组件是通过UILayout进行组织的. 其主要属性如下:
+        row() 定义横向子布局.
+        column() 定义竖向子布局.
+        split() 按比例拆分行
+        column_flow() 定义多列的竖向子布局(根据列,计算行数, 然后按逐列摆放组件)
+        box() 定义有外框的竖向子布局
+        menu_pie() 饼状菜单
+        operator() 放置调用操作器的按钮
+        prop() 展示RNA,并把它放在布局中
+        label() 显示标签
+        separator() 分隔元素
+    """
+    
+    
+    
     bl_label = "test panel"#面板标签
     bl_idname="pt_testpanel"#面板自定义 ID
     bl_space_type='VIEW_3D'#
@@ -46,20 +78,54 @@ class TestPanel(bpy.types.Panel):
     def draw(self,context):
         layout=self.layout
         row=layout.row()
-        row.label(text='Add an object',icon='CUBE')
+        row.label(text='Add an object',icon='EMPTY_AXIS')
         row=layout.row()
-        row.operator("mesh.primitive_cube_add")
+        row.operator("mesh.primitive_cube_add",icon='CUBE') 
+        row.operator("mesh.primitive_uv_sphere_add",icon='SPHERE' )
+        
+        
+        
+class TestPanelA(bpy.types.Panel):
+    bl_label = "test panel A"
+    bl_idname = "pt_panel_a"
+    bl_space_type='VIEW_3D'
+    bl_region_type='UI'
+    bl_category='My first addon'
+    bl_parent_id = "pt_testpanel"
+    
+    def draw(self,context):
+        layout=self.layout
         row=layout.row()
-        row.label(text='Add an object',icon='SHADING_SOLID')
+        row.label(text="Select an option to scale your object",icon="FONT_DATA")
         row=layout.row()
-        row.operator("mesh.primitive_uv_sphere_add")
+        row.operator("transform.resize")
+        row=layout.row()
+        row.prop(context.object,"scale")
+                
+class TestPanelB(bpy.types.Panel):
+    bl_label = "test panel B"
+    bl_idname = "pt_panel_b"
+    bl_space_type='VIEW_3D'
+    bl_region_type='UI'
+    bl_category='My first addon'   
+    bl_parent_id = "pt_testpanel"
+    
+    def draw(self,context):
+        layout=self.layout
+        row=layout.row()
+        row.label(text="this is panel b",icon="ERROR")
+        
         
 def register():
     bpy.utils.register_class(TestPanel)
+    bpy.utils.register_class(TestPanelA)
+    bpy.utils.register_class(TestPanelB)
     
     
 def unregister():
     bpy.utils.unregister_class(TestPanel)
+    bpy.utils.unregister_class(TestPanelA)
+    bpy.utils.unregister_class(TestPanelB)
     
 if __name__=="__main__":
     register()
