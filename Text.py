@@ -1,14 +1,22 @@
+#插件信息
 bl_info = {
-     "name" :  "Object add" ,                           """这将作为主条目显示在附加组件菜单中"""
-    "description" :  "单行解释这个脚本究竟做了什么。" , """这个简短的文本帮助用户在阅读插件列表时决定他是否需要插件"""
-    "author" :  "zh" ,                                  """作者姓名"""
-    "version" :  ( 1 ,  0 ),                            """脚本版本"""
-    "blender" :  ( 2 ,  65 ,  0 ),                      """运行脚本所需的最低 Blender 版本"""
-    "location" :  "View3D > Tool" ,                     """说明可以在何处找到新功能"""
-    "warning" :  "" ,                                   """用于插件面板中的警告图标和文本"""
-    "tracker_url" :  "https://developer.blender.org/maniphest/task/edit/form /2/" , 
-    "support" :  "COMMUNITY" ,                          """显示支持级别（默认为COMMUNITY）"""
-    "category" :  "Add Mesh"                            """定义脚本所属的组"""
+    #这将作为主条目显示在附加组件菜单中"""
+    'name': 'Object add',
+    #定义脚本所属的组"""
+    'category': '3D View', 
+    #作者姓名"""
+    'author': 'zh', 
+    #说明可以在何处找到新功能"""
+    'location': 'View 3D > Tool Shelf > CATS', 
+    #这个简短的文本帮助用户在阅读插件列表时决定他是否需要插件"""
+    'description': '单行解释这个脚本究竟做了什么',
+    #脚本版本"""
+    'version': (1, 0 , 0),  
+    #运行脚本所需的最低 Blender 版本"""
+    'blender': (2, 80, 0),
+    #显示支持级别（默认为COMMUNITY）"""
+    "support" :  "COMMUNITY" ,        
+    'warning': '',
 }
 
 
