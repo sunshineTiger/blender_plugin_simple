@@ -77,6 +77,7 @@ class TestPanel(bpy.types.Panel):
     
     def draw(self,context):
         layout=self.layout
+        layout.scale_y = 1.4 
         row=layout.row()
         row.label(text='Add an object',icon='EMPTY_AXIS')
         row=layout.row()
@@ -95,12 +96,14 @@ class TestPanelA(bpy.types.Panel):
     
     def draw(self,context):
         layout=self.layout
+        obj = context.object
         row=layout.row()
         row.label(text="Select an option to scale your object",icon="FONT_DATA")
         row=layout.row()
         row.operator("transform.resize")
-        row=layout.row()
-        row.prop(context.object,"scale")
+        layout.scale_y = 1.4 
+        col=layout.column()
+        col.prop(obj,"scale")
                 
 class TestPanelB(bpy.types.Panel):
     bl_label = "test panel B"
@@ -112,20 +115,43 @@ class TestPanelB(bpy.types.Panel):
     
     def draw(self,context):
         layout=self.layout
+        layout.scale_y = 1.4 
         row=layout.row()
         row.label(text="this is panel b",icon="ERROR")
         
+class TestPanelC(bpy.types.Panel):
+    bl_label = "test panel C"
+    bl_idname = "pt_panel_C"
+    bl_space_type='VIEW_3D'
+    bl_region_type='UI'
+    bl_category='My first addon'   
+    bl_parent_id = "pt_testpanel"
+    
+    def draw(self,context):
+        layout=self.layout
+        layout.scale_y = 1.4 
+        row=layout.row()
+        row.label(text="select a special option",icon="COLOR_BLUE")
+        row=layout.row()
+        row.operator("object.shade_smooth",icon="MOD_SMOOTH",text="Set Smooth shading")
+        row=layout.row()
+        row.operator("object.shade_flat",icon="MOD_SMOOTH",text="Set Flat shading")
+        row=layout.row()
+        row.operator("object.subdivision_set",icon="MOD_SMOOTH",text="Set Subdivision shading")
+        row=layout.row()
+        row.operator("object.modifier_add")
         
 def register():
     bpy.utils.register_class(TestPanel)
     bpy.utils.register_class(TestPanelA)
     bpy.utils.register_class(TestPanelB)
-    
+    bpy.utils.register_class(TestPanelC)
     
 def unregister():
     bpy.utils.unregister_class(TestPanel)
     bpy.utils.unregister_class(TestPanelA)
     bpy.utils.unregister_class(TestPanelB)
+    bpy.utils.unregister_class(TestPanelC)
     
 if __name__=="__main__":
     register()
