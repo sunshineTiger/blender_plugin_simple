@@ -20,6 +20,7 @@ bl_info = {
 }
 import bpy
 from bpy.types import Panel, Operator,Header,Menu
+from bpy.props import StringProperty,FloatVectorProperty,EnumProperty
 
 class SharderMainPanel(Panel):
     bl_label = "Shader Library"
