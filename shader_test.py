@@ -19,8 +19,9 @@ bl_info = {
     'warning': '',
 }
 import bpy
+from bpy.types import Panel, Operator,Header,Menu
 
-class SharderMainPanel(bpy.types.Panel):
+class SharderMainPanel(Panel):
     bl_label = "Shader Library"
     bl_idname = "SHADER_PT_MAINPANEL"
     bl_space_type='VIEW_3D'
@@ -33,7 +34,7 @@ class SharderMainPanel(bpy.types.Panel):
         row.label(text = 'Select a shader to be added')
         row.operator('shader.diamond_operator')
         
-class SHADER_OT_DIAMOND(bpy.types.Operator):
+class SHADER_OT_DIAMOND(Operator):
     bl_label = "Diamond"
     bl_idname = "shader.diamond_operator"
     
@@ -106,17 +107,20 @@ class SHADER_OT_DIAMOND(bpy.types.Operator):
         bpy.context.object.active_material = material_diamond
         
         return {'FINISHED'}
-        
+
+classes=[SHADER_OT_DIAMOND,SharderMainPanel]
+
 def register():
-    bpy.utils.register_class(SHADER_OT_DIAMOND)
-    bpy.utils.register_class(SharderMainPanel)
+    #bpy.utils.register_class(SHADER_OT_DIAMOND)
+   # bpy.utils.register_class(SharderMainPanel)
+    for cls in classes:
+        bpy.utils.register_class(cls)
    
-    
-    
-    
 def unregister():
-    bpy.utils.unregister_class(SHADER_OT_DIAMOND)
-    bpy.utils.unregister_class(SharderMainPanel)
+   # bpy.utils.unregister_class(SHADER_OT_DIAMOND)
+    #bpy.utils.unregister_class(SharderMainPanel)
+    for cls in classes:
+        bpy.utils.unregister_class(cls)
    
     
 if __name__=="__main__":
